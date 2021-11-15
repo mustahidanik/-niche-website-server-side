@@ -99,7 +99,7 @@ async function run() {
             const user = await userCollection.findOne(filter)
             // console.log(result);
             let isAdmin = false
-            if (user.role === "admin") {
+            if (user?.role === "admin") {
                 isAdmin = true
             }
             res.json({ admin: isAdmin })
@@ -111,6 +111,10 @@ async function run() {
             const result = await reviewCollection.insertOne(review)
             console.log(result);
             res.json(result)
+        });
+        app.get("/review", async (req, res) => {
+            const result = await reviewCollection.find({}).toArray()
+            res.send(result)
         })
 
 
